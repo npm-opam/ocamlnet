@@ -1,0 +1,56 @@
+{
+    "name": "ocamlnet-actual",
+    "exportedEnvVars": {
+        "FINDLIB": {
+            "global": true,
+            "resolveAsRelativePath": true,
+            "globalCollisionBehavior": "joinPath",
+            "val": "./_build/ocamlfind/lib"
+        },
+        "ocamlnet_enable": {
+            "global": true,
+            "globalCollisionBehavior": "clobber",
+            "val": "enable"
+        },
+        "ocamlnet_installed": {
+            "global": true,
+            "globalCollisionBehavior": "clobber",
+            "val": "true"
+        },
+        "version": {
+            "global": true,
+            "globalCollisionBehavior": "clobber",
+            "val": "4.1.2"
+        },
+        "ocamlnet_version": {
+            "global": true,
+            "globalCollisionBehavior": "clobber",
+            "val": "4.1.2"
+        },
+        "PATH": {
+            "global": true,
+            "resolveAsRelativePath": true,
+            "globalCollisionBehavior": "joinPath",
+            "val": "./_build/ocamlfind/bin"
+        }
+    },
+    "version": "4.1.2",
+    "dependencies": {
+        "@opam-alpha/pcre": "*",
+        "@opam-alpha/ocamlfind": "*",
+        "@opam-alpha/conf-gnutls": "*",
+        "dependency-env": "https://github.com/npm-ml/dependency-env.git",
+        "substs": "https://github.com/yunxing/substs.git",
+        "@opam-alpha/ocamlbuild": "*",
+        "@opam-alpha/camlzip": "*",
+        "@opam-alpha/conf-gssapi": "*",
+        "nopam": "https://github.com/yunxing/nopam.git",
+        "opam-installer-bin": "https://github.com/yunxing/opam-installer-bin.git"
+    },
+    "scripts": {
+        "postinstall": "eval $(dependencyEnv) && nopam && ./configure -bindir $opam_bin -${conf_gssapi_enable:-disable}-gssapi -${conf_gnutls_enable:-disable}-gnutls -${pcre_enable:-disable}-pcre -${lablgtk_enable:-disable}-gtk2 -${camlzip_enable:-disable}-zip -with-nethttpd && make all && make opt && make install && (opam-installer --prefix=$opam_prefix || true)"
+    },
+    "peerDependencies": {
+        "@opam-alpha/ocaml": ">= 4.00.0"
+    }
+}
